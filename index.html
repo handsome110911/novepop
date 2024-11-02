@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>簡單互動網站</title>
     <style>
+        body {
+            background-color: #E4DEB3;
+            position: relative;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
         img {
             display: block;
             margin: 20px auto;
@@ -22,30 +35,30 @@
 </head>
 <body>
 
+    <div class="overlay"></div>
     <img id="image" src="nove1.jpg" alt="Interactive Image" width="500">
     <div id="counter">點擊次數: 0</div>
     <button id="resetButton">重置點擊次數</button>
-
-    <audio id="audio" src="nove.mp3"></audio>
 
     <script>
         let clickCount = 0;
         const image = document.getElementById('image');
         const counter = document.getElementById('counter');
-        const audio = document.getElementById('audio');
         const resetButton = document.getElementById('resetButton');
 
         image.addEventListener('mousedown', () => {
             image.src = 'nove2.jpg';
+
+            // 創建新的 audio 元素以允許重疊播放
+            const audio = new Audio('nove.mp3');
             audio.play();
+
             clickCount++;
             counter.textContent = `點擊次數: ${clickCount}`;
         });
 
         image.addEventListener('mouseup', () => {
             image.src = 'nove1.jpg';
-            audio.pause();
-            audio.currentTime = 0;
         });
 
         resetButton.addEventListener('click', () => {
